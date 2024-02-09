@@ -27,49 +27,59 @@ const signup = () => {
   return (
     <>
       <div className="h-screen flex flex-col justify-center items-center">
-        <h1>Signup</h1>
-        <div className="text-black">
-          <form onSubmit={handleSignup}>
-            <div className="flex flex-col">
-              <p></p>
-              <input
-                type="text"
-                value={username}
-                placeholder="Username"
-                onChange={(e) => {
-                  setUsername(e.target.value);
-                }}
-              />
-            </div>
-            <div className="flex flex-col">
-              <input
-                type="email"
-                value={email}
-                placeholder="Email"
-                onChange={(e) => {
-                  setEmail(e.target.value);
-                }}
-              />
-            </div>
-            <div className="flex flex-col">
-              <input
-                type="password"
-                value={password}
-                placeholder="Password"
-                onChange={(e) => {
-                  setPassword(e.target.value);
-                }}
-              />
-            </div>
-            <div className="flex justify-center border-2 mt-4 text-white">
-              <button type="submit">Signup</button>
-            </div>
-            <div>
-              <p className="text-white">
-                Already have an account? <a href="/login">Login</a>
-              </p>
-            </div>
-          </form>
+        <div className="border-2 h-96 w-80 flex flex-col justify-center shadow-lg shadow-white ">
+          <h1 className="text-center text-2xl mt-4 font-semibold">SignUp</h1>
+          <div className="p-4">
+            <form onSubmit={handleSignup}>
+              <div className="flex flex-col">
+                <input
+                  type="text"
+                  value={username}
+                  placeholder="Username"
+                  onChange={(e) => {
+                    setUsername(e.target.value);
+                  }}
+                  className="border-2 px-4 py-2 mb-4 bg-white bg-opacity-10"
+                />
+              </div>
+              <div className="flex flex-col">
+                <input
+                  type="email"
+                  value={email}
+                  placeholder="Email"
+                  onChange={(e) => {
+                    setEmail(e.target.value);
+                  }}
+                  className="border-2 px-4 py-2 mb-4 bg-white bg-opacity-10"
+                />
+              </div>
+              <div className="flex flex-col">
+                <input
+                  type="password"
+                  value={password}
+                  placeholder="Password"
+                  onChange={(e) => {
+                    setPassword(e.target.value);
+                  }}
+                  className="border-2 px-4 py-2 mb-4 bg-white bg-opacity-10"
+                />
+              </div>
+              <hr />
+              <div className="border-2 mt-4 hover:bg-white hover:text-black transition-all duration-200">
+                <button type="submit" className="w-full h-10 font-semibold">
+                  SignUp
+                </button>
+              </div>
+              <div>
+                <p className="mt-4 text-center font-light">
+                  Already have an account?{" "}
+                  <a href="/login" className="hover:text-red-500">
+                    Login
+                  </a>
+                </p>
+              </div>
+            </form>
+          </div>
         </div>
       </div>
     </>
