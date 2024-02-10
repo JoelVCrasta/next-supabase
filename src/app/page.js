@@ -5,6 +5,7 @@ import supabase from "./config/supabaseClient";
 
 const Home = () => {
   const [user, setUser] = useState(null);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const checkSession = async () => {
@@ -15,6 +16,8 @@ const Home = () => {
         console.log("Data :", data);
       } catch (error) {
         console.log("Session Error :", error.message);
+      } finally {
+        setLoading(false);
       }
     };
 
@@ -30,6 +33,14 @@ const Home = () => {
       console.log("Sign Out Error :", error.message);
     }
   };
+
+  if (loading) {
+    return (
+      <div className="h-screen flex justify-center items-center">
+        <h1 className="text-2xl">Loading...</h1>
+      </div>
+    );
+  }
 
   return (
     <>
