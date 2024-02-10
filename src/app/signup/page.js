@@ -24,7 +24,7 @@ const signup = () => {
 
   const handleGoogleSignup = async () => {
     try {
-      const { user, session, error } = await supabase.auth.signInWithOAuth({
+      const { user,  error } = await supabase.auth.signInWithOAuth({
         provider: "google",
       });
 

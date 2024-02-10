@@ -7,15 +7,25 @@ const Home = () => {
   const [user, setUser] = useState(null);
 
   useEffect(() => {
-    const checlSession = async () => {
-      const { data, error } = await supabase.auth.getSession();
-      setUser(data ? data.user : null);
+    const checkSession = async () => {
+      try {
+        const { data, error } = await supabase.auth.getSession();
+        if (error) console.log("Session Error :", error.message);
+        else setUser(data ? data.session.user : null);
+        console.log("Data :", data);
+      } catch (error) {
+        console.log("Session Error :", error.message);
+      }
     };
+
+    checkSession();
   }, []);
 
   const handleSignOut = async () => {
     try {
       await supabase.auth.signOut();
+      setUser(null);
+      navigate("/");
     } catch (error) {
       console.log("Sign Out Error :", error.message);
     }
@@ -26,8 +36,15 @@ const Home = () => {
       <div className="h-screen flex justify-center items-center font-mono">
         {user ? (
           <div>
-            <h1>Welcome {user.email}</h1>
-            <button onClick={handleSignOut}>Sign Out</button>
+            <h1 className="text-4xl">Welcome {user.email}</h1>
+            <div className="flex justify-center mt-6">
+              <button
+                onClick={handleSignOut}
+                className="border-2 px-4 py-1 hover:bg-white hover:text-black transition-all duration-300"
+              >
+                Sign Out
+              </button>
+            </div>
           </div>
         ) : (
           <div>
