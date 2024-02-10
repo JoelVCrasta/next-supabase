@@ -3,7 +3,6 @@ import { useState, useRef } from "react";
 import supabase from "../config/supabaseClient";
 
 const signup = () => {
-  const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
@@ -12,36 +11,40 @@ const signup = () => {
 
     try {
       const { user, error } = await supabase.auth.signUp({
-        username,
         email,
         password,
       });
 
       if (error) console.log(error.message);
       else alert("Check your email for the confirmation link");
-    } catch {
+    } catch (error) {
       console.error(error.message);
+    }
+  };
+
+  const handleGoogleSignup = async () => {
+    try {
+      const { user, session, error } = await supabase.auth.signInWithOAuth({
+        provider: "google",
+      });
+
+      if (error) {
+        console.error("Google login error:", error.message);
+      } else {
+        console.log("Google login successful");
+      }
+    } catch (error) {
+      console.error("Google login error:", error.message);
     }
   };
 
   return (
     <>
       <div className="h-screen flex flex-col justify-center items-center">
-        <div className="border-2 h-96 w-80 flex flex-col justify-center shadow-lg shadow-white ">
-          <h1 className="text-center text-2xl mt-4 font-semibold">SignUp</h1>
+        <div className="border-2 h-auto w-80 py-4 flex flex-col justify-center shadow-lg shadow-white ">
+          <h1 className="text-center text-2xl mb-4 font-semibold">SignUp</h1>
           <div className="p-4">
             <form onSubmit={handleSignup}>
-              <div className="flex flex-col">
-                <input
-                  type="text"
-                  value={username}
-                  placeholder="Username"
-                  onChange={(e) => {
-                    setUsername(e.target.value);
-                  }}
-                  className="border-2 px-4 py-2 mb-4 bg-white bg-opacity-10"
-                />
-              </div>
               <div className="flex flex-col">
                 <input
                   type="email"
@@ -68,6 +71,14 @@ const signup = () => {
               <div className="border-2 mt-4 hover:bg-white hover:text-black transition-all duration-200">
                 <button type="submit" className="w-full h-10 font-semibold">
                   SignUp
+                </button>
+              </div>
+              <div className="border-2 mt-4 hover:bg-white hover:text-black transition-all duration-200">
+                <button
+                  onClick={handleGoogleSignup}
+                  className="w-full h-10 font-semibold"
+                >
+                  Google
                 </button>
               </div>
               <div>
